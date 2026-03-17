@@ -4,9 +4,11 @@ import type { NewsEdition } from '../types/news';
 interface HeroProps {
   edition: NewsEdition | null;
   selectedDate: string;
+  showAudio: boolean;
+  onToggleAudio: () => void;
 }
 
-export function Hero({ edition, selectedDate }: HeroProps) {
+export function Hero({ edition, selectedDate, showAudio, onToggleAudio }: HeroProps) {
   const parts = selectedDate ? selectedDate.split('-') : [];
   const [y, m, d] = parts.length === 3 ? parts : ['', '', ''];
   const archivePath = y ? `/archive/${y}/${m}/${d}` : '#';
@@ -14,12 +16,10 @@ export function Hero({ edition, selectedDate }: HeroProps) {
     ? [...new Set(edition.articles.map(a => a.section))]
     : [];
 
-  const listenBtnWidth = '220px';
-
   return (
     <section style={{
       paddingTop: '120px',
-      paddingBottom: '56px',
+      paddingBottom: '40px',
       paddingLeft: '24px',
       paddingRight: '24px',
       textAlign: 'center',
@@ -91,34 +91,34 @@ export function Hero({ edition, selectedDate }: HeroProps) {
         {!edition && <div style={{ marginBottom: '2rem' }} />}
 
         {/* Action buttons */}
-        <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
 
           {/* Listen button */}
-          <a
-            href={`${archivePath}/headlines-today.mp3`}
-            target="_blank"
-            rel="noreferrer"
+          <button
+            onClick={onToggleAudio}
+            disabled={showAudio}
             style={{
               display: 'inline-flex',
               alignItems: 'center',
               justifyContent: 'center',
               gap: '8px',
-              background: '#c9a962',
+              background: showAudio ? 'rgba(201,169,98,0.5)' : '#c9a962',
               color: '#0c1222',
               padding: '0.75rem 1.5rem',
               borderRadius: '6px',
-              textDecoration: 'none',
+              border: 'none',
               fontWeight: 600,
               fontSize: '0.875rem',
-              width: listenBtnWidth,
-              transition: 'opacity 0.2s',
+              cursor: showAudio ? 'default' : 'pointer',
+              transition: 'opacity 0.2s, background 0.2s',
+              minWidth: '200px',
             }}
-            onMouseEnter={e => (e.currentTarget as HTMLAnchorElement).style.opacity = '0.85'}
-            onMouseLeave={e => (e.currentTarget as HTMLAnchorElement).style.opacity = '1'}
+            onMouseEnter={e => { if (!showAudio) (e.currentTarget as HTMLButtonElement).style.opacity = '0.85'; }}
+            onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.opacity = '1'; }}
           >
             <Headphones size={16} />
             Listen to Today's Briefing
-          </a>
+          </button>
 
           {/* Download PDF */}
           <a
@@ -139,7 +139,7 @@ export function Hero({ edition, selectedDate }: HeroProps) {
               fontSize: '0.875rem',
               background: 'transparent',
               transition: 'background 0.2s',
-              width: listenBtnWidth,
+              minWidth: '160px',
             }}
             onMouseEnter={e => (e.currentTarget as HTMLAnchorElement).style.background = 'rgba(201,169,98,0.08)'}
             onMouseLeave={e => (e.currentTarget as HTMLAnchorElement).style.background = 'transparent'}
