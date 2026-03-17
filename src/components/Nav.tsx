@@ -9,7 +9,7 @@ export function Nav({ theme, toggleTheme }: NavProps) {
   return (
     <nav className="nav" aria-label="Main navigation">
       <div className="nav-left">
-        <a href="https://suhailtaj.cloud" className="nav-logo">S.</a>
+        <a href="https://suhailtaj.cloud" className="nav-logo">H.</a>
         <span className="nav-title">The Headlines Today</span>
       </div>
       <div className="nav-right">
