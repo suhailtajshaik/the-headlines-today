@@ -8,8 +8,8 @@ services:
     volumes:
       - /home/r2d2/newspapers:/archive:ro
     networks:
-      - webnet
+      - r2d2-proxy
 
 networks:
-  webnet:
+  r2d2-proxy:
     external: true
