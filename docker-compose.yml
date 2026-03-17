@@ -1,0 +1,15 @@
+services:
+  headlines:
+    build: .
+    container_name: the-headlines-today
+    restart: unless-stopped
+    ports:
+      - "3006:80"
+    volumes:
+      - /home/r2d2/newspapers:/archive:ro
+    networks:
+      - r2d2-proxy
+
+networks:
+  r2d2-proxy:
+    external: true
