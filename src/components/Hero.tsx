@@ -1,4 +1,5 @@
-import { Headphones, FileText } from 'lucide-react';
+import { useState } from 'react';
+import { Headphones, FileText, X } from 'lucide-react';
 import type { NewsEdition } from '../types/news';
 
 interface HeroProps {
@@ -7,12 +8,19 @@ interface HeroProps {
 }
 
 export function Hero({ edition, selectedDate }: HeroProps) {
+  const [showAudio, setShowAudio] = useState(false);
+  const [audioError, setAudioError] = useState(false);
+
   const parts = selectedDate ? selectedDate.split('-') : [];
   const [y, m, d] = parts.length === 3 ? parts : ['', '', ''];
   const archivePath = y ? `/archive/${y}/${m}/${d}` : '#';
+  const audioSrc = y ? `${archivePath}/headlines-today.mp3` : '';
   const categories = edition
     ? [...new Set(edition.articles.map(a => a.section))]
     : [];
+
+  // Button width: same as the listen button (~220px)
+  const listenBtnWidth = '220px';
 
   return (
     <section style={{
@@ -24,7 +32,7 @@ export function Hero({ edition, selectedDate }: HeroProps) {
       position: 'relative',
       overflow: 'hidden',
     }}>
-      {/* Glow orbs — same as lab */}
+      {/* Glow orbs */}
       <div style={{
         position: 'absolute',
         top: '10%',
@@ -48,9 +56,8 @@ export function Hero({ edition, selectedDate }: HeroProps) {
         pointerEvents: 'none',
       }} />
 
-      {/* Content */}
       <div style={{ position: 'relative', zIndex: 1 }}>
-        {/* Tag badge — matches lab style */}
+        {/* Tag badge */}
         <span style={{
           display: 'inline-block',
           color: '#c9a962',
@@ -77,56 +84,92 @@ export function Hero({ edition, selectedDate }: HeroProps) {
           The Headlines Today
         </h1>
 
-        <p style={{
-          fontSize: '1.05rem',
-          color: '#94a3b8',
-          marginBottom: '0.4rem',
-        }}>
+        <p style={{ fontSize: '1.05rem', color: '#94a3b8', marginBottom: '0.4rem' }}>
           {edition?.label || selectedDate}
         </p>
 
         {edition && (
-          <p style={{
-            fontSize: '0.85rem',
-            color: '#475569',
-            marginBottom: '2rem',
-          }}>
+          <p style={{ fontSize: '0.85rem', color: '#475569', marginBottom: '2rem' }}>
             {edition.articles.length} stories across {categories.length} categories
           </p>
         )}
 
         {!edition && <div style={{ marginBottom: '2rem' }} />}
 
-        {/* Action buttons — lab style */}
-        <div style={{
-          display: 'flex',
-          gap: '12px',
-          justifyContent: 'center',
-          flexWrap: 'wrap',
-        }}>
-          <a
-            href={`${archivePath}/headlines-today.mp3`}
-            target="_blank"
-            rel="noreferrer"
-            style={{
-              display: 'inline-flex',
+        {/* Action buttons */}
+        <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>
+
+          {/* Listen button OR inline audio player */}
+          {!showAudio ? (
+            <button
+              onClick={() => setShowAudio(true)}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                background: '#c9a962',
+                color: '#0c1222',
+                padding: '0.75rem 1.5rem',
+                borderRadius: '6px',
+                border: 'none',
+                fontWeight: 600,
+                fontSize: '0.875rem',
+                cursor: 'pointer',
+                width: listenBtnWidth,
+                transition: 'opacity 0.2s',
+              }}
+              onMouseEnter={e => (e.currentTarget as HTMLButtonElement).style.opacity = '0.85'}
+              onMouseLeave={e => (e.currentTarget as HTMLButtonElement).style.opacity = '1'}
+            >
+              <Headphones size={16} />
+              Listen to Today's Briefing
+            </button>
+          ) : (
+            <div style={{
+              display: 'flex',
               alignItems: 'center',
               gap: '8px',
-              background: '#c9a962',
-              color: '#0c1222',
-              padding: '0.75rem 1.5rem',
+              width: listenBtnWidth,
+              background: 'rgba(21, 29, 46, 0.9)',
+              border: '1px solid rgba(201, 169, 98, 0.3)',
               borderRadius: '6px',
-              textDecoration: 'none',
-              fontWeight: 600,
-              fontSize: '0.875rem',
-              transition: 'opacity 0.2s',
-            }}
-            onMouseEnter={e => (e.currentTarget as HTMLAnchorElement).style.opacity = '0.85'}
-            onMouseLeave={e => (e.currentTarget as HTMLAnchorElement).style.opacity = '1'}
-          >
-            <Headphones size={16} />
-            Listen to Today's Briefing
-          </a>
+              padding: '6px 10px',
+            }}>
+              {audioError ? (
+                <span style={{ color: '#64748b', fontSize: '0.8rem', flex: 1, textAlign: 'center' }}>
+                  Audio unavailable
+                </span>
+              ) : (
+                <audio
+                  controls
+                  autoPlay
+                  preload="auto"
+                  src={audioSrc}
+                  onError={() => setAudioError(true)}
+                  style={{ flex: 1, height: '32px', minWidth: 0 }}
+                />
+              )}
+              <button
+                onClick={() => { setShowAudio(false); setAudioError(false); }}
+                style={{
+                  background: 'transparent',
+                  border: 'none',
+                  color: '#64748b',
+                  cursor: 'pointer',
+                  padding: '2px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  flexShrink: 0,
+                }}
+                aria-label="Close audio"
+              >
+                <X size={14} />
+              </button>
+            </div>
+          )}
+
+          {/* Download PDF */}
           <a
             href={`${archivePath}/headlines-today.pdf`}
             target="_blank"
@@ -134,6 +177,7 @@ export function Hero({ edition, selectedDate }: HeroProps) {
             style={{
               display: 'inline-flex',
               alignItems: 'center',
+              justifyContent: 'center',
               gap: '8px',
               border: '1px solid #c9a962',
               color: '#c9a962',
@@ -144,6 +188,7 @@ export function Hero({ edition, selectedDate }: HeroProps) {
               fontSize: '0.875rem',
               background: 'transparent',
               transition: 'background 0.2s',
+              width: listenBtnWidth,
             }}
             onMouseEnter={e => (e.currentTarget as HTMLAnchorElement).style.background = 'rgba(201,169,98,0.08)'}
             onMouseLeave={e => (e.currentTarget as HTMLAnchorElement).style.background = 'transparent'}

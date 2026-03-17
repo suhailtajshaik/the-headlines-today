@@ -6,7 +6,6 @@ import { Hero } from './components/Hero';
 import { DatePicker } from './components/DatePicker';
 import { CategoryFilter } from './components/CategoryFilter';
 import { ArticleGrid } from './components/ArticleGrid';
-import { AudioPlayer } from './components/AudioPlayer';
 import { Footer } from './components/Footer';
 import { X } from 'lucide-react';
 import type { Article } from './types/news';
@@ -52,7 +51,7 @@ function App() {
     <>
       <Nav theme={theme} toggleTheme={toggleTheme} />
 
-      {/* Grid background extends from Hero through DatePicker and AudioPlayer */}
+      {/* Grid background — Hero + DatePicker only, ends cleanly before filters */}
       <div style={{
         background: '#0c1222',
         backgroundImage: `
@@ -61,10 +60,10 @@ function App() {
         `,
         backgroundSize: '60px 60px',
         position: 'relative',
+        paddingBottom: '32px',
       }}>
         <Hero edition={edition} selectedDate={selectedDate} />
         <DatePicker editions={editions} selectedDate={selectedDate} onSelect={(d) => { setSelectedDate(d); setCategoryFilter('all'); }} />
-        {selectedDate && <AudioPlayer selectedDate={selectedDate} />}
       </div>
 
       {loading ? (
