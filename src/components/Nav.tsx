@@ -13,10 +13,10 @@ export function Nav({ theme, toggleTheme }: NavProps) {
       left: 0,
       right: 0,
       zIndex: 100,
-      background: 'rgba(12, 18, 34, 0.9)',
+      background: 'var(--nav-bg)',
       backdropFilter: 'blur(12px)',
       WebkitBackdropFilter: 'blur(12px)',
-      borderBottom: '1px solid #1e293b',
+      borderBottom: '1px solid var(--border)',
     }} aria-label="Main navigation">
       <div style={{
         maxWidth: '1200px',
@@ -27,29 +27,58 @@ export function Nav({ theme, toggleTheme }: NavProps) {
         alignItems: 'center',
         justifyContent: 'space-between',
       }}>
-        {/* Logo — matches lab/portfolio */}
+        {/* Logo */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
           <a href="/" style={{
             fontSize: '1.25rem',
             fontWeight: 700,
-            color: '#fff',
+            color: 'var(--text-primary)',
             textDecoration: 'none',
             flexShrink: 0,
           }}>
-            H<span style={{ color: '#c9a962' }}>.</span>
+            H<span style={{ color: 'var(--accent)' }}>.</span>
           </a>
           <span style={{
             fontSize: '0.9rem',
             fontWeight: 500,
-            color: '#64748b',
+            color: 'var(--text-muted)',
             letterSpacing: '0.01em',
           }}>
             The Headlines Today
           </span>
         </div>
 
-        {/* Right side */}
+        {/* Right side — links then toggle last */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+          <a
+            href="https://lab.suhailtaj.cloud"
+            style={{
+              fontSize: '0.875rem',
+              fontWeight: 500,
+              color: 'var(--text-secondary)',
+              textDecoration: 'none',
+              transition: 'color 0.2s',
+            }}
+            onMouseEnter={e => (e.currentTarget as HTMLAnchorElement).style.color = 'var(--accent)'}
+            onMouseLeave={e => (e.currentTarget as HTMLAnchorElement).style.color = 'var(--text-secondary)'}
+          >
+            Lab
+          </a>
+          <a
+            href="https://suhailtaj.cloud"
+            style={{
+              fontSize: '0.875rem',
+              fontWeight: 500,
+              color: 'var(--text-secondary)',
+              textDecoration: 'none',
+              transition: 'color 0.2s',
+            }}
+            onMouseEnter={e => (e.currentTarget as HTMLAnchorElement).style.color = 'var(--accent)'}
+            onMouseLeave={e => (e.currentTarget as HTMLAnchorElement).style.color = 'var(--text-secondary)'}
+          >
+            Portfolio
+          </a>
+          {/* Theme toggle — always last */}
           <button
             onClick={toggleTheme}
             aria-label="Toggle theme"
@@ -59,52 +88,24 @@ export function Nav({ theme, toggleTheme }: NavProps) {
               justifyContent: 'center',
               width: '34px',
               height: '34px',
-              border: '1px solid #1e293b',
+              border: '1px solid var(--border)',
               borderRadius: '8px',
               background: 'transparent',
-              color: '#64748b',
+              color: 'var(--text-muted)',
               cursor: 'pointer',
               transition: 'all 0.2s',
             }}
             onMouseEnter={e => {
-              (e.currentTarget as HTMLButtonElement).style.borderColor = '#c9a962';
-              (e.currentTarget as HTMLButtonElement).style.color = '#c9a962';
+              (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--accent)';
+              (e.currentTarget as HTMLButtonElement).style.color = 'var(--accent)';
             }}
             onMouseLeave={e => {
-              (e.currentTarget as HTMLButtonElement).style.borderColor = '#1e293b';
-              (e.currentTarget as HTMLButtonElement).style.color = '#64748b';
+              (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--border)';
+              (e.currentTarget as HTMLButtonElement).style.color = 'var(--text-muted)';
             }}
           >
             {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
           </button>
-          <a
-            href="https://lab.suhailtaj.cloud"
-            style={{
-              fontSize: '0.875rem',
-              fontWeight: 500,
-              color: '#94a3b8',
-              textDecoration: 'none',
-              transition: 'color 0.2s',
-            }}
-            onMouseEnter={e => (e.currentTarget as HTMLAnchorElement).style.color = '#c9a962'}
-            onMouseLeave={e => (e.currentTarget as HTMLAnchorElement).style.color = '#94a3b8'}
-          >
-            Lab
-          </a>
-          <a
-            href="https://suhailtaj.cloud"
-            style={{
-              fontSize: '0.875rem',
-              fontWeight: 500,
-              color: '#94a3b8',
-              textDecoration: 'none',
-              transition: 'color 0.2s',
-            }}
-            onMouseEnter={e => (e.currentTarget as HTMLAnchorElement).style.color = '#c9a962'}
-            onMouseLeave={e => (e.currentTarget as HTMLAnchorElement).style.color = '#94a3b8'}
-          >
-            Portfolio
-          </a>
         </div>
       </div>
     </nav>
