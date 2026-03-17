@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { Headphones, FileText, X } from 'lucide-react';
+import { Headphones, FileText } from 'lucide-react';
 import type { NewsEdition } from '../types/news';
 
 interface HeroProps {
@@ -8,9 +7,6 @@ interface HeroProps {
 }
 
 export function Hero({ edition, selectedDate }: HeroProps) {
-  const [showAudio, setShowAudio] = useState(false);
-  const [audioError, setAudioError] = useState(false);
-
   const parts = selectedDate ? selectedDate.split('-') : [];
   const [y, m, d] = parts.length === 3 ? parts : ['', '', ''];
   const archivePath = y ? `/archive/${y}/${m}/${d}` : '#';
@@ -18,7 +14,6 @@ export function Hero({ edition, selectedDate }: HeroProps) {
     ? [...new Set(edition.articles.map(a => a.section))]
     : [];
 
-  const audioSrc = y ? `${archivePath}/headlines-today.mp3` : '';
   const listenBtnWidth = '220px';
 
   return (
@@ -98,75 +93,32 @@ export function Hero({ edition, selectedDate }: HeroProps) {
         {/* Action buttons */}
         <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>
 
-          {/* Listen button → inline audio player */}
-          {!showAudio ? (
-            <button
-              onClick={() => { setShowAudio(true); setAudioError(false); }}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '8px',
-                background: '#c9a962',
-                color: '#0c1222',
-                padding: '0.75rem 1.5rem',
-                borderRadius: '6px',
-                border: 'none',
-                fontWeight: 600,
-                fontSize: '0.875rem',
-                cursor: 'pointer',
-                width: listenBtnWidth,
-                transition: 'opacity 0.2s',
-              }}
-              onMouseEnter={e => (e.currentTarget as HTMLButtonElement).style.opacity = '0.85'}
-              onMouseLeave={e => (e.currentTarget as HTMLButtonElement).style.opacity = '1'}
-            >
-              <Headphones size={16} />
-              Listen to Today's Briefing
-            </button>
-          ) : (
-            <div style={{
-              display: 'flex',
+          {/* Listen button */}
+          <a
+            href={`${archivePath}/headlines-today.mp3`}
+            target="_blank"
+            rel="noreferrer"
+            style={{
+              display: 'inline-flex',
               alignItems: 'center',
+              justifyContent: 'center',
               gap: '8px',
-              width: listenBtnWidth,
-              background: 'rgba(21, 29, 46, 0.9)',
-              border: '1px solid rgba(201, 169, 98, 0.3)',
+              background: '#c9a962',
+              color: '#0c1222',
+              padding: '0.75rem 1.5rem',
               borderRadius: '6px',
-              padding: '6px 10px',
-            }}>
-              {audioError ? (
-                <span style={{ color: '#64748b', fontSize: '0.8rem', flex: 1, textAlign: 'center' }}>
-                  Audio unavailable
-                </span>
-              ) : (
-                <audio
-                  controls
-                  autoPlay
-                  preload="auto"
-                  src={audioSrc}
-                  onError={() => setAudioError(true)}
-                  style={{ flex: 1, height: '32px', minWidth: 0 }}
-                />
-              )}
-              <button
-                onClick={() => { setShowAudio(false); setAudioError(false); }}
-                style={{
-                  background: 'transparent',
-                  border: 'none',
-                  color: '#64748b',
-                  cursor: 'pointer',
-                  padding: '2px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  flexShrink: 0,
-                }}
-                aria-label="Close audio"
-              >
-                <X size={14} />
-              </button>
-            </div>
-          )}
+              textDecoration: 'none',
+              fontWeight: 600,
+              fontSize: '0.875rem',
+              width: listenBtnWidth,
+              transition: 'opacity 0.2s',
+            }}
+            onMouseEnter={e => (e.currentTarget as HTMLAnchorElement).style.opacity = '0.85'}
+            onMouseLeave={e => (e.currentTarget as HTMLAnchorElement).style.opacity = '1'}
+          >
+            <Headphones size={16} />
+            Listen to Today's Briefing
+          </a>
 
           {/* Download PDF */}
           <a
