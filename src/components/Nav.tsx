@@ -16,7 +16,7 @@ export function Nav({ theme, toggleTheme }: NavProps) {
         <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle theme">
           {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
         </button>
-        <a href="https://suhailtaj.cloud/lab" className="nav-link">Lab</a>
+        <a href="https://lab.suhailtaj.cloud" className="nav-link">Lab</a>
       </div>
     </nav>
   );
