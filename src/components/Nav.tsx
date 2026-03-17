@@ -29,7 +29,7 @@ export function Nav({ theme, toggleTheme }: NavProps) {
       }}>
         {/* Logo — matches lab/portfolio */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-          <a href="https://suhailtaj.cloud" style={{
+          <a href="/" style={{
             fontSize: '1.25rem',
             fontWeight: 700,
             color: '#fff',
@@ -90,6 +90,20 @@ export function Nav({ theme, toggleTheme }: NavProps) {
             onMouseLeave={e => (e.currentTarget as HTMLAnchorElement).style.color = '#94a3b8'}
           >
             Lab
+          </a>
+          <a
+            href="https://suhailtaj.cloud"
+            style={{
+              fontSize: '0.875rem',
+              fontWeight: 500,
+              color: '#94a3b8',
+              textDecoration: 'none',
+              transition: 'color 0.2s',
+            }}
+            onMouseEnter={e => (e.currentTarget as HTMLAnchorElement).style.color = '#c9a962'}
+            onMouseLeave={e => (e.currentTarget as HTMLAnchorElement).style.color = '#94a3b8'}
+          >
+            Portfolio
           </a>
         </div>
       </div>
