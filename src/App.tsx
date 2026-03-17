@@ -51,9 +51,21 @@ function App() {
   return (
     <>
       <Nav theme={theme} toggleTheme={toggleTheme} />
-      <Hero edition={edition} selectedDate={selectedDate} />
-      <DatePicker editions={editions} selectedDate={selectedDate} onSelect={(d) => { setSelectedDate(d); setCategoryFilter('all'); }} />
-      {selectedDate && <AudioPlayer selectedDate={selectedDate} />}
+
+      {/* Grid background extends from Hero through DatePicker and AudioPlayer */}
+      <div style={{
+        background: '#0c1222',
+        backgroundImage: `
+          linear-gradient(rgba(201, 169, 98, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(201, 169, 98, 0.03) 1px, transparent 1px)
+        `,
+        backgroundSize: '60px 60px',
+        position: 'relative',
+      }}>
+        <Hero edition={edition} selectedDate={selectedDate} />
+        <DatePicker editions={editions} selectedDate={selectedDate} onSelect={(d) => { setSelectedDate(d); setCategoryFilter('all'); }} />
+        {selectedDate && <AudioPlayer selectedDate={selectedDate} />}
+      </div>
 
       {loading ? (
         <div className="loading-state">

@@ -23,12 +23,6 @@ export function Hero({ edition, selectedDate }: HeroProps) {
       textAlign: 'center',
       position: 'relative',
       overflow: 'hidden',
-      background: '#0c1222',
-      backgroundImage: `
-        linear-gradient(rgba(201, 169, 98, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(201, 169, 98, 0.03) 1px, transparent 1px)
-      `,
-      backgroundSize: '60px 60px',
     }}>
       {/* Glow orbs — same as lab */}
       <div style={{
