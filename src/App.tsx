@@ -76,7 +76,6 @@ function App() {
         <Hero
           edition={edition}
           selectedDate={selectedDate}
-          showAudio={showAudio}
           onToggleAudio={() => { setShowAudio(true); setAudioError(false); }}
         />
         <DatePicker

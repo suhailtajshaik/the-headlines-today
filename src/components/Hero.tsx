@@ -4,11 +4,10 @@ import type { NewsEdition } from '../types/news';
 interface HeroProps {
   edition: NewsEdition | null;
   selectedDate: string;
-  showAudio: boolean;
   onToggleAudio: () => void;
 }
 
-export function Hero({ edition, selectedDate, showAudio, onToggleAudio }: HeroProps) {
+export function Hero({ edition, selectedDate, onToggleAudio }: HeroProps) {
   const parts = selectedDate ? selectedDate.split('-') : [];
   const [y, m, d] = parts.length === 3 ? parts : ['', '', ''];
   const archivePath = y ? `/archive/${y}/${m}/${d}` : '#';
@@ -96,25 +95,24 @@ export function Hero({ edition, selectedDate, showAudio, onToggleAudio }: HeroPr
           {/* Listen button */}
           <button
             onClick={onToggleAudio}
-            disabled={showAudio}
             style={{
               display: 'inline-flex',
               alignItems: 'center',
               justifyContent: 'center',
               gap: '8px',
-              background: showAudio ? 'rgba(201,169,98,0.5)' : '#c9a962',
+              background: '#c9a962',
               color: '#0c1222',
               padding: '0.75rem 1.5rem',
               borderRadius: '6px',
               border: 'none',
               fontWeight: 600,
               fontSize: '0.875rem',
-              cursor: showAudio ? 'default' : 'pointer',
-              transition: 'opacity 0.2s, background 0.2s',
+              cursor: 'pointer',
+              transition: 'opacity 0.2s',
               minWidth: '200px',
             }}
-            onMouseEnter={e => { if (!showAudio) (e.currentTarget as HTMLButtonElement).style.opacity = '0.85'; }}
-            onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.opacity = '1'; }}
+            onMouseEnter={e => (e.currentTarget as HTMLButtonElement).style.opacity = '0.85'}
+            onMouseLeave={e => (e.currentTarget as HTMLButtonElement).style.opacity = '1'}
           >
             <Headphones size={16} />
             Listen to Today's Briefing
