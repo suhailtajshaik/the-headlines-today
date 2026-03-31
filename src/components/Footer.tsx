@@ -4,7 +4,7 @@ export function Footer() {
   const [visitors, setVisitors] = useState<number | null>(null)
 
   useEffect(() => {
-    fetch('https://analytics.suhailtaj.cloud/api/track', {
+    fetch('https://analytics.suhailtaj.cloud/collect', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ site: 'headlines', referrer: document.referrer || null }),
