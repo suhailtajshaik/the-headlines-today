@@ -6,7 +6,7 @@ interface CategoryFilterProps {
 
 export function CategoryFilter({ categories, selected, onSelect }: CategoryFilterProps) {
   return (
-    <div className="category-filter" role="group" aria-label="Filter by category">
+    <div className="category-filter">
       <button
         className={`category-btn${selected === 'all' ? ' active' : ''}`}
         onClick={() => onSelect('all')}

@@ -13,24 +13,26 @@ export function DatePicker({ editions, selectedDate, onSelect }: DatePickerProps
 
   return (
     <div className="date-picker">
-      {recent.map(ed => {
-        const short = formatShort(ed.date);
-        return (
-          <button
-            key={ed.date}
-            className={`date-pill${ed.date === selectedDate ? ' active' : ''}`}
-            onClick={() => onSelect(ed.date)}
-          >
-            {short}
-          </button>
-        );
-      })}
+      <select
+        className="date-dropdown"
+        value={selectedDate}
+        onChange={(e) => onSelect(e.target.value)}
+      >
+        {recent.map(ed => {
+          const full = formatFull(ed.date);
+          return (
+            <option key={ed.date} value={ed.date}>
+              {full}
+            </option>
+          );
+        })}
+      </select>
     </div>
   );
 }
 
-function formatShort(dateStr: string) {
+function formatFull(dateStr: string) {
   const [y, m, d] = dateStr.split('-').map(Number);
   const date = new Date(y, m - 1, d);
-  return date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+  return date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
 }

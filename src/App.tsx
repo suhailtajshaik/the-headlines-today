@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { useTheme } from './hooks/useTheme';
 import { useNews } from './hooks/useNews';
 import { Nav } from './components/Nav';
@@ -16,14 +16,6 @@ function App() {
   const { edition, editions, selectedDate, setSelectedDate, loading, error } = useNews();
   const [categoryFilter, setCategoryFilter] = useState('all');
   const [expandedArticle, setExpandedArticle] = useState<Article | null>(null);
-
-  useEffect(() => {
-    const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setExpandedArticle(null);
-    };
-    window.addEventListener('keydown', handleEsc);
-    return () => window.removeEventListener('keydown', handleEsc);
-  }, []);
 
   const categories = useMemo(() => {
     if (!edition) return [];
@@ -75,7 +67,7 @@ function App() {
 
       {expandedArticle && (
         <div className="article-expanded" onClick={() => setExpandedArticle(null)}>
-          <div className="article-expanded-content" role="dialog" aria-modal="true" onClick={e => e.stopPropagation()}>
+          <div className="article-expanded-content" onClick={e => e.stopPropagation()}>
             <button className="close-btn" onClick={() => setExpandedArticle(null)}>
               <X size={16} />
             </button>

@@ -16,7 +16,7 @@ export function ArticleGrid({ articles, onSelect }: ArticleGridProps) {
   }
 
   return (
-    <div className="article-grid" aria-label="News articles">
+    <div className="article-grid">
       {articles.map((article, i) => (
         <ArticleCard key={i} article={article} onClick={() => onSelect(article)} />
       ))}

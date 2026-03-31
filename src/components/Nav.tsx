@@ -7,7 +7,7 @@ interface NavProps {
 
 export function Nav({ theme, toggleTheme }: NavProps) {
   return (
-    <nav className="nav" aria-label="Main navigation">
+    <nav className="nav">
       <div className="nav-left">
         <a href="https://suhailtaj.cloud" className="nav-logo">S.</a>
         <span className="nav-title">The Headlines Today</span>
