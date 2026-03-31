@@ -1,10 +1,10 @@
 services:
-  headlines:
+  the-headlines-today-dev:
     build: .
-    container_name: the-headlines-today
+    container_name: the-headlines-today-dev
     restart: unless-stopped
     ports:
-      - "3006:80"
+      - "3334:80"
     volumes:
       - /home/r2d2/newspapers:/archive:ro
     networks:

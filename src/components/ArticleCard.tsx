@@ -18,13 +18,7 @@ export function ArticleCard({ article, onClick }: ArticleCardProps) {
   const badgeClass = BADGE_MAP[article.section] || 'badge-world';
 
   return (
-    <article
-      className="article-card"
-      onClick={onClick}
-      role="button"
-      tabIndex={0}
-      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') onClick(); }}
-    >
+    <article className="article-card" onClick={onClick}>
       <span className={`article-badge ${badgeClass}`}>
         {article.sectionEmoji} {article.section}
       </span>
