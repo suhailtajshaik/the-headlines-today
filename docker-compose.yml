@@ -6,8 +6,8 @@ services:
     ports:
       - "3334:80"
     volumes:
-      - /home/r2d2/newspapers:/usr/share/nginx/html/archive:ro
-      - /home/r2d2/newspapers/index.json:/usr/share/nginx/html/index.json:ro
+      - /home/r2d2/headlines-today:/usr/share/nginx/html/archive:ro
+      - /home/r2d2/headlines-today/index.json:/usr/share/nginx/html/index.json:ro
     networks:
       - r2d2-proxy
 

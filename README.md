@@ -25,17 +25,17 @@ docker compose up -d
 
 ## Docker
 
-- Container: `the-headlines-today`
-- Port: `3006:80`
-- Archive mount: `/home/r2d2/newspapers` → `/archive` (read-only)
-- Network: `webnet` (external)
+- Container: `the-headlines-today-dev`
+- Port: `3334:80`
+- Archive mount: `/home/r2d2/headlines-today` → `/archive` (read-only)
+- Network: `r2d2-proxy` (external)
 
 ## Data Pipeline
 
 ```
 RSS Feeds → maxwell.py (5 AM EST) → data.json + .mp3 + .pdf
                                             ↓
-                                   /home/r2d2/newspapers/YYYY/MM/DD/
+                                   /home/r2d2/headlines-today/YYYY/MM/DD/
                                             ↓
                                    nginx serves /archive/YYYY/MM/DD/
                                             ↓
