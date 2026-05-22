@@ -14,21 +14,6 @@ services:
     networks:
       - r2d2-proxy
 
-  the-headlines-today-dev:
-    build:
-      # Development is deployed from the development branch worktree.
-      context: ${HEADLINES_TODAY_DEV_CONTEXT:-/home/r2d2/projects/the-headlines-today-development}
-    container_name: the-headlines-today-dev
-    restart: unless-stopped
-    ports:
-      - "3334:80"
-    volumes:
-      # Same shared Maxwell output as production; sites differ by code branch only.
-      - /home/r2d2/headlines-today:/usr/share/nginx/html/archive:ro
-      - /home/r2d2/headlines-today/index.json:/usr/share/nginx/html/index.json:ro
-    networks:
-      - r2d2-proxy
-
 networks:
   r2d2-proxy:
     external: true
