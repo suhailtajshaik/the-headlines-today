@@ -26,10 +26,8 @@ docker compose up -d
 ## Docker
 
 - Container: `the-headlines-today`
-- Production container: `the-headlines-today` on host port `3333`
-- Development container: `the-headlines-today-dev` on host port `3334`
+- Port: `3333:80`
 - Shared archive mount: `/home/r2d2/headlines-today` → `/archive` (read-only)
-- Branch ownership: production builds from `master`; development builds from the `development` worktree
 - Network: `r2d2-proxy` (external)
 
 ## Data Pipeline
