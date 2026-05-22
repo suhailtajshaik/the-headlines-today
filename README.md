@@ -25,9 +25,9 @@ docker compose up -d
 
 ## Docker
 
-- Container: `the-headlines-today-dev`
-- Port: `3334:80`
-- Archive mount: `/home/r2d2/headlines-today` → `/archive` (read-only)
+- Container: `the-headlines-today`
+- Port: `3333:80`
+- Shared archive mount: `/home/r2d2/headlines-today` → `/archive` (read-only)
 - Network: `r2d2-proxy` (external)
 
 ## Data Pipeline
